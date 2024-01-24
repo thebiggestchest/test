@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import './setting.css';
 
 
 // 함수형 컴포넌트인 Login을 정의합니다.
-const BannerForm = () => {
+const Makebanner = () => {
+  const navigate = useNavigate ();
+
+    const GoLogin = () => {
+      navigate("/login");
+    }
+    const GoSignup = () => {
+      navigate("/signup");
+    }
+    const GoSetting = () =>{
+        navigate("/setting")
+    }
     const handleLogin = () => {
       // 여기에 로그인 로직을 처리하세요
       console.log('로그인 로직이 여기에 들어가야 합니다');
@@ -24,16 +36,16 @@ const BannerForm = () => {
 
     <div class="charts-see-all">
 
-      <a class="go-login" href="user/login">
+      <a class="go-login" onClick={GoLogin}>
         로그인
       </a>
 
-      <a class="go-login" href="#">
+      <a class="go-login" onClick={GoSignup}>
         회원가입
       </a>
 
       <button class="go-start">
-        <a class="go-go" href="#">
+        <a class="go-go" onClick={GoSetting}>
           시작하기
         </a>
       </button>
@@ -97,4 +109,4 @@ const BannerForm = () => {
 </body>
   );
 };
-export default BannerForm;
+export default Makebanner;

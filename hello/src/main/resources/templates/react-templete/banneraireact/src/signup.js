@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import './signup.css';
 
 
@@ -8,6 +9,18 @@ const Signup = () => {
     const [userid, setUserId] = useState('');
     const [userpassword, setUserPw] = useState('');
     const [userCRN, setUserCRN] = useState('');
+    const navigate = useNavigate ();
+
+    const GoLogin = () => {
+      navigate("/login");
+    }
+    const GoSignup = () => {
+      navigate("/signup");
+    }
+    const GoSetting = () =>{
+      navigate("/setting")
+  }
+  
     
     const handleSignup = () => {
         // 간단한 형태로 로컬 스토리지에 사용자 정보를 저장
@@ -15,7 +28,10 @@ const Signup = () => {
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
         alert('회원가입이 되었습니다')
         console.log('회원가입이 완료되었습니다.', userInfo);
-    };
+        return "/login"
+    }
+    
+
 
   // JSX를 반환하여 화면을 구성합니다.
     return (
@@ -27,16 +43,16 @@ const Signup = () => {
 
     <div class="charts-see-all">
 
-      <a class="go-login" href="#">
+      <a class="go-login" onClick={GoLogin}>
         로그인
       </a>
 
-      <a class="go-login" href="#">
+      <a class="go-login" onClick={GoSignup}>
         회원가입
       </a>
 
       <button class="go-start">
-        <a class="go-go" href="#">
+        <a class="go-go" onClick={GoSetting}>
           시작하기
         </a>
       </button>
@@ -48,7 +64,7 @@ const Signup = () => {
 
 <section>
   <div class="container">
-    <form class= "login">
+    <form method="post" class= "login">
       <h1 class= "login-title">회원가입</h1>
 
       <label>이름</label>

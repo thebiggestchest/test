@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import './mypage.css';
 
 
 // 함수형 컴포넌트인 Login을 정의합니다.
-const Login = () => {
+const Mypage = () => {
+    const navigate = useNavigate ();
+
+    const GoLogin = () => {
+      navigate("/login");
+    }
+    const GoSignup = () => {
+      navigate("/signup");
+    }
+    const GoSetting = () =>{
+        navigate("/setting")
+    }
   // 상태 훅을 사용하여 아이디와 비밀번호의 상태를 관리합니다.
     const [아이디, set아이디] = useState('');
     const [비밀번호, set비밀번호] = useState('');
@@ -29,16 +41,16 @@ const Login = () => {
 
         <div class="charts-see-all">
 
-            <a class="go-login" href="#">
+            <a class="go-login" onClick={GoLogin}>
                 로그인
             </a>
 
-            <a class="go-login" href="#">
+            <a class="go-login" onClick={GoSignup}>
                 회원가입
             </a>
 
             <button class="go-start">
-                <a class="go-go" href="#">
+                <a class="go-go" onClick={GoSetting}>
                     시작하기
                 </a>
             </button>
@@ -94,4 +106,4 @@ const Login = () => {
 </body>
   );
 };
-export default Login;
+export default Mypage;
