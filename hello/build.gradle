@@ -35,47 +35,56 @@ dependencies {
 
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+// 'test' 작업을 JUnit 5로 구성합니다.
+// tasks.named('test') {
+//     useJUnitPlatform()
+// }
 
-def frontendDir = "$projectDir/src/main/frontend"
+// // 프론트엔드 리소스 디렉토리를 정의합니다.
+// def frontendDir = "$projectDir/src/main/resources/templates"
 
-sourceSets {
-	main {
-		resources { srcDirs = ["$projectDir/src/main/resources/templete/react-templete/banneraireact"]
-		}
-	}
-}
+// // sourceSets를 사용하여 프론트엔드 리소스를 포함시킵니다.
+// sourceSets {
+//     main {
+//         resources {
+//             srcDirs = ["$projectDir/src/main/resources/template/react-template/banneraireact"]
+//         }
+//     }
+// }
 
-processResources { dependsOn "copyReactBuildFiles" }
+// // processResources가 copyReactBuildFiles에 의존하도록 구성합니다.
+// processResources { dependsOn "copyReactBuildFiles" }
 
-task installReact(type: Exec) {
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "audit", "fix"
-		commandLine 'npm.cmd', 'install' }
-	else {
-		commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
-	}
-}
+// // installReact 작업을 구성합니다.
+// task installReact(type: Exec) {
+//     workingDir "$frontendDir"
+//     inputs.dir "$frontendDir"
+//     group = BasePlugin.BUILD_GROUP
+//     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//         commandLine "npm.cmd", "audit", "fix"
+//         commandLine 'npm.cmd', 'install'
+//     } else {
+//         commandLine "npm", "audit", "fix"
+//         commandLine 'npm', 'install'
+//     }
+// }
 
-task buildReact(type: Exec) {
-	dependsOn "installReact"
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "run-script", "build"
-	} else {
-		commandLine "npm", "run-script", "build"
-	}
-}
+// // buildReact 작업을 구성합니다.
+// task buildReact(type: Exec) {
+//     dependsOn "installReact"
+//     workingDir "$frontendDir"
+//     inputs.dir "$frontendDir"
+//     group = BasePlugin.BUILD_GROUP
+//     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//         commandLine "npm.cmd", "run-script", "build"
+//     } else {
+//         commandLine "npm", "run-script", "build"
+//     }
+// }
 
-task copyReactBuildFiles(type: Copy) {
-	dependsOn "buildReact"
-	from "$frontendDir/build"
-	into "$projectDir/src/main/resources/static"
-}
+// // copyReactBuildFiles 작업을 구성합니다.
+// task copyReactBuildFiles(type: Copy) {
+//     dependsOn "buildReact"
+//     from "$frontendDir/build"
+//     into "$projectDir/src/main/resources/templates"
+// }

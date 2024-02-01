@@ -1,16 +1,15 @@
+// import React, { useEffect, useState } from 'react';
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+// import ReactDOM  from 'react';
+import axios from 'axios';
 import './signup.css';
+
 
 
 // 함수형 컴포넌트인 Login을 정의합니다.
 const Signup = () => {
-    const [username, setUserName] = useState('');
-    const [userid, setUserId] = useState('');
-    const [userpassword, setUserPw] = useState('');
-    const [userCRN, setUserCRN] = useState('');
-    const navigate = useNavigate ();
-
+    const navigate = useNavigate();
     const GoLogin = () => {
       navigate("/login");
     }
@@ -18,22 +17,42 @@ const Signup = () => {
       navigate("/signup");
     }
     const GoSetting = () =>{
-      navigate("/setting")
-  }
-  
-    
-    const handleSignup = () => {
-        // 간단한 형태로 로컬 스토리지에 사용자 정보를 저장
-        const userInfo = { username, userid, userpassword, userCRN };
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        alert('회원가입이 되었습니다')
-        console.log('회원가입이 완료되었습니다.', userInfo);
-        return "/login"
+      navigate("/setting");
     }
-    
+  
+    const [username, setUserName] = useState('');
+    const [userid, setUserId] = useState('');
+    const [userpassword, setUserPw] = useState('');
+    const [usercheckPW, setCheckPw] = useState('');
+    const [userCRN, setUserCRN] = useState('');
+    const userInfo = { username, userid, userpassword, userCRN };
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/;
 
+const handleSignup = async(event) => {
+    event.preventDefault();
+    if (!passwordRegex.test(userpassword)) {
+      alert('비밀번호는 영문, 숫자, 특수문자를 모두 포함해야 합니다.');
+      return;
+    }
 
-  // JSX를 반환하여 화면을 구성합니다.
+    if (userpassword !== usercheckPW) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('/api/signup', userInfo);
+
+      alert('회원가입이 되었습니다');
+      console.log('회원가입이 완료되었습니다.', userInfo);
+      console.log(response.data); // 성공한 경우 서버 응답을 콘솔에 출력
+
+      // 회원가입 후 로그인 페이지로 이동 또는 다른 작업 수행
+      navigate('/login');
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
+  };
     return (
     <body>
 <header>
@@ -64,7 +83,7 @@ const Signup = () => {
 
 <section>
   <div class="container">
-    <form method="post" class= "login">
+    <form class= "login" onSubmit={handleSignup}>
       <h1 class= "login-title">회원가입</h1>
 
       <label>이름</label>
@@ -95,6 +114,7 @@ const Signup = () => {
               name="password"
               type="password"
               placeholder="다시 비밀번호를 입력하세요."
+              onChange={(e) => setCheckPw(e.target.value)}
       />
 
       <label>사업자등록번호</label>

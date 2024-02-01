@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your React App</title>
+</head>
+<body>
+    <div id="root-login"></div>
+    <!-- React app's root element for Login component -->
+
+    <div id="root-mypage"></div>
+    <!-- React app's root element for MyPage component -->
+
+    <div id="root-signup"></div>
+    <!-- React app's root element for Signup component -->
+
+    <div id="root-setting"></div>
+    <!-- React app's root element -->
+
+    <!-- Include your bundled JavaScript file -->
+    <script src="login.js"></script>
+    <script src="mypage.js"></script>
+    <script src="signup.js"></script>
+    <script src="setting.js"></script>
+    <script src="App.js"> </script>
+    <script>
+        // Render each React component
+        ReactDOM.render(React.createElement(Login), document.getElementById('root-login'));
+        ReactDOM.render(React.createElement(MyPage), document.getElementById('root-mypage'));
+        ReactDOM.render(React.createElement(Signup), document.getElementById('root-signup'));
+        ReactDOM.render(React.createElement(Setting), document.getElementById('root-setting'));
+    </script>
+</body>
+</html>
