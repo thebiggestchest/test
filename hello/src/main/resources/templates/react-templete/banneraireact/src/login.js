@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import './login.css';
 
 
 // 함수형 컴포넌트인 Login을 정의합니다.
 const Login = () =>  {
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
+    const [userid, setId] = useState('');
+    const [userpassword, setPassword] = useState('');
+    const loginInfo = {userid, userpassword};
+
     const navigate = useNavigate();
     const GoLogin = () => {
       navigate("/login");
@@ -22,23 +25,17 @@ const Login = () =>  {
     const handleLogin = async(event) => {
         event.preventDefault(); // 오타 수정
         try{
-            const response = await axios.post('/api/login', {
-                id,
-                password,
-            });
-                const { id, password } = this.state;
-                // 실제로는 여기에서 서버로 요청을 보내고 결과를 받아오게 됩니다.
-                // 여기서는 간단하게 아이디가 'user'이고 비밀번호가 'password'일 때 로그인 성공으로 가정합니다.
-                if (id === 'user' && password === 'password') {
-                    alert('로그인 성공!');
-                    console.log("로그인 성공",id,password)
-                } else {
-                    alert('로그인 실패. 다시 시도하세요.');
-                    console.log("로그인 실패",id,password)
-                }
+            const response = await axios.post('/api/login', loginInfo);
+            console.log("로그인 성공", userid, userpassword)
+            console.log(response.data)
+            dispatch(loginUser(username, password));
+            sessionStorage.setItem('userid', loginInfo.userid);
+            alert("로그인성공")
+            navigate("/setting")
             }
             catch (error) {
-                console.error('Error during login:', error);
+                console.error('로그인중 오류:', error);
+                alert("아이디와 비밀번호를 확인해주세요.")
               }
             };
         
@@ -84,7 +81,7 @@ const Login = () =>  {
                 />
                 <label>비밀번호</label>
                 <input
-                        name="password"
+                        name="userpassword"
                         type="password"
                         placeholder="비밀번호"
                         onChange={(e) => setPassword(e.target.value)}
@@ -92,7 +89,7 @@ const Login = () =>  {
                 <div class = "login-forgot">
                     <a class="login-forgot-link" href="#">비밀번호를 잊으셨나요?</a>
                 </div>
-                <button class="login-but" onclick={handleLogin}>로그인</button>
+                <button class="login-but" onClick={handleLogin}>로그인</button>
                 <div class= "login-signup">
                     회원이 아니신가요?
                     <a class="login-signup-link" onClick={GoSignup}>가입하기</a>

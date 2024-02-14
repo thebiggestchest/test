@@ -22,7 +22,7 @@ const Signup = () => {
   
     const [username, setUserName] = useState('');
     const [userid, setUserId] = useState('');
-    const [userpassword, setUserPw] = useState('');
+    const [userpassword, setUserPassword] = useState('');
     const [usercheckPW, setCheckPw] = useState('');
     const [userCRN, setUserCRN] = useState('');
     const userInfo = { username, userid, userpassword, userCRN };
@@ -46,7 +46,7 @@ const handleSignup = async(event) => {
       alert('회원가입이 되었습니다');
       console.log('회원가입이 완료되었습니다.', userInfo);
       console.log(response.data); // 성공한 경우 서버 응답을 콘솔에 출력
-
+      console.log(userInfo)
       // 회원가입 후 로그인 페이지로 이동 또는 다른 작업 수행
       navigate('/login');
     } catch (error) {
@@ -96,22 +96,22 @@ const handleSignup = async(event) => {
 
       <label>아이디</label>
       <input
-              name="id"
+              name="userid"
               type="text"
               placeholder="아이디를 입력하세요."
               onChange={(e) => setUserId(e.target.value)}
       />
       <label>비밀번호</label>
       <input
-              name="password"
+              name="userpassword"
               type="password"
-              placeholder="비밀번호를 입력하세요."
-              onChange={(e) => setUserPw(e.target.value)}
+              placeholder="비밀번호는 영문, 숫자, 특수문자를 모두 포함해야 합니다."
+              onChange={(e) => setUserPassword(e.target.value)}
       />
 
       <label>비밀번호 확인</label>
       <input
-              name="password"
+              name="usercheckPW"
               type="password"
               placeholder="다시 비밀번호를 입력하세요."
               onChange={(e) => setCheckPw(e.target.value)}

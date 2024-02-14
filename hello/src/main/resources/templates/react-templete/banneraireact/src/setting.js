@@ -21,10 +21,7 @@ const Makebanner = () => {
       console.log('로그인 로직이 여기에 들어가야 합니다');
     };
   
-    const handleRecommendation = () => {
-      // 여기에 추천 로직을 처리하세요
-      console.log('추천 로직이 여기에 들어가야 합니다');
-    };
+  
 
   // JSX를 반환하여 화면을 구성합니다.
   return (
