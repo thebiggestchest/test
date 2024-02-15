@@ -2,11 +2,10 @@ package com.group.hello.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-// import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -14,8 +13,6 @@ import java.util.Map;
 
 import com.group.hello.service.HelloUserinfo;
 
-// import com.group.hello.service.HelloService;
-// import com.group.hello.service.HelloUserinfo;
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 @RestController
 @RequestMapping("/api")
@@ -31,6 +28,7 @@ public class HelloController  {
         userDatabase.put(userInfo.getUserid(), userInfo);
         return "success";
     }
+    
     @PostMapping("/login")
     public ResponseEntity<String> handleLogin(@RequestBody HelloUserinfo loginInfo) {
         String userid = loginInfo.getUserid();
@@ -43,11 +41,31 @@ public class HelloController  {
             // 로그인 성공
             System.out.println("Login successful for user: " + userid + userpassword);
             return ResponseEntity.ok("success");
+            
         } else {
             // 로그인 실패
             System.out.println("Login failed for user: " + userid + userpassword);
             return ResponseEntity.status(401).body("failure");
         }
+    }
+    @PostMapping("/makebanner")
+    public ResponseEntity<String> makeBanner(@RequestBody Map<String, String> bannerInfo) {
+        // 클라이언트로부터 받은 배너 설정 정보 처리
+        String subject = bannerInfo.get("subject");
+        String size = bannerInfo.get("size");
+        String text = bannerInfo.get("text");
+        String autoText = bannerInfo.get("autotext");
+
+        // 예시로 받은 배너 설정 정보를 콘솔에 출력
+        System.out.println("Subject: " + subject);
+        System.out.println("Size: " + size);
+        System.out.println("Text: " + text);
+        System.out.println("Auto Text: " + autoText);
+
+        // 실제로는 이곳에서 받은 설정 정보를 활용하여 필요한 작업을 수행할 수 있습니다.
+        // 예를 들어, 데이터베이스에 저장하거나 다른 서비스로 전달할 수 있습니다.
+
+        return ResponseEntity.ok("Received banner settings");
     }
     
     

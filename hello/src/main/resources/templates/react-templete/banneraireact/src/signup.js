@@ -1,7 +1,5 @@
-// import React, { useEffect, useState } from 'react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {  useNavigate } from "react-router-dom";
-// import ReactDOM  from 'react';
 import axios from 'axios';
 import './signup.css';
 
@@ -19,6 +17,13 @@ const Signup = () => {
     const GoSetting = () =>{
       navigate("/setting");
     }
+    const sessionSearch = sessionStorage.getItem("userid");
+    useEffect(() => {
+        if (sessionSearch) { // sessionSearch가 존재한다면
+          alert("이미 로그인되어 있습니다"); // 이미 로그인되어 있다는 알림을 띄웁니다
+          navigate("/setting");
+        }
+      }, []); // 의존성 배열 비워짐
   
     const [username, setUserName] = useState('');
     const [userid, setUserId] = useState('');

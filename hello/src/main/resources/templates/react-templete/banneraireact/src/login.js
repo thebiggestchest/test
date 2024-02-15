@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import './login.css';
 
 
@@ -10,8 +10,15 @@ const Login = () =>  {
     const [userid, setId] = useState('');
     const [userpassword, setPassword] = useState('');
     const loginInfo = {userid, userpassword};
-
     const navigate = useNavigate();
+    const sessionSearch = sessionStorage.getItem("userid");
+    useEffect(() => {
+        if (sessionSearch) { // sessionSearch가 존재한다면
+          alert("이미 로그인되어 있습니다"); // 이미 로그인되어 있다는 알림을 띄웁니다
+          navigate("/setting");
+        }
+      }, []); // 의존성 배열 비워짐
+
     const GoLogin = () => {
       navigate("/login");
     }
@@ -25,13 +32,21 @@ const Login = () =>  {
     const handleLogin = async(event) => {
         event.preventDefault(); // 오타 수정
         try{
-            const response = await axios.post('/api/login', loginInfo);
-            console.log("로그인 성공", userid, userpassword)
-            console.log(response.data)
-            dispatch(loginUser(username, password));
-            sessionStorage.setItem('userid', loginInfo.userid);
-            alert("로그인성공")
-            navigate("/setting")
+            const response = await axios.post('/api/login', loginInfo,{
+                headers: {
+                    'Content-Type': 'application/json' // JSON 형식으로 보내기 위한 헤더 설정
+                  }
+                });
+                if (response.data === 'success') {
+                    console.log("로그인 성공", userid, userpassword)
+                    console.log(response.data)
+                    sessionStorage.setItem('userid', loginInfo.userid);
+                    alert("로그인성공")
+                    navigate("/setting") // 로그인 후 이동할 페이지로 이동합니다.
+                  } else {
+                    alert('로그인에 실패했습니다. 다시 시도해주세요.');
+                  }
+                
             }
             catch (error) {
                 console.error('로그인중 오류:', error);
