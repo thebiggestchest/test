@@ -1,8 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {useState} from "react";
 import React from 'react';
-// import ReactDOM  from 'react';
-import axios from "axios";
 import Login from './login';
 import Setting from './setting';
 import Mypage from './mypage';
