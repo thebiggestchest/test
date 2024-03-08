@@ -55,12 +55,14 @@ public class HelloController  {
         String size = bannerInfo.get("size");
         String text = bannerInfo.get("text");
         String autoText = bannerInfo.get("autotext");
+        String user = bannerInfo.get("userid");
 
         // 예시로 받은 배너 설정 정보를 콘솔에 출력
         System.out.println("Subject: " + subject);
         System.out.println("Size: " + size);
         System.out.println("Text: " + text);
         System.out.println("Auto Text: " + autoText);
+        System.out.println("Auto Text: " + user);
 
         // 실제로는 이곳에서 받은 설정 정보를 활용하여 필요한 작업을 수행할 수 있습니다.
         // 예를 들어, 데이터베이스에 저장하거나 다른 서비스로 전달할 수 있습니다.
